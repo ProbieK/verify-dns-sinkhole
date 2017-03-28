@@ -1,0 +1,5 @@
+#!/bin/bash
+
+for LINE in $(cat ./domainblacklist.txt); do
+  ./verify-blocked-domains $LINE
+done
