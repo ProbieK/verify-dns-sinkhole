@@ -1,0 +1,37 @@
+#!/usr/bin/python3
+
+import urllib3
+import requests
+import ipaddress
+import sys
+
+opendns1='146.112.61.104/30'
+opendns2='146.112.61.108/31'
+opendns3='146.112.61.110/32'
+
+opendns1v6='::ffff:146.112.61.104/126'
+opendns2v6='::ffff:146.112.61.108/127'
+opendns3v6='::ffff:146.112.61.110/128'
+
+url="http://{0}".format(sys.argv[1])
+
+try:
+    rsp=requests.get(url, stream=True)
+    #rsp.raw._connection.sock.getpeername()
+    result=(rsp.raw._connection.sock.getpeername()[0])
+    #print(result)
+    statement = ipaddress.ip_address(result) in ipaddress.ip_network(opendns)
+    statement1 = ipaddress.ip_address(result) in ipaddress.ip_network(opendns1)
+    statement2 = ipaddress.ip_address(result) in ipaddress.ip_network(opendns2)
+    statement3 = ipaddress.ip_address(result) in ipaddress.ip_network(opendns3)
+    statement1v6 = ipaddress.ip_address(result) in ipaddress.ip_network(opendns1v6)
+    statement2v6 = ipaddress.ip_address(result) in ipaddress.ip_network(opendns2v6)
+    statement3v6 = ipaddress.ip_address(result) in ipaddress.ip_network(opendns3v6)
+
+    if statement1 or statement2 or statement3 or statement1v6 or statement2v6 or statement3v6:
+        print("OK: {0} {1}".format(url, result))
+    else:
+        print("!!: {0} {1}".format(url, result))
+
+except:
+    print("FAILED: {0}".format(url))
