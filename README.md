@@ -1,7 +1,7 @@
 # verify-dns-sinkhole    
 Execute script either by:
 
-$ for LINE in $(cat ./domainblacklist.txt); do ./verify-blocked-domains $LINE; done
+$ for LINE in $(cat ./domainblacklist.txt); do ./verify-dns-sinkhole $LINE; done
 
 OR
 
